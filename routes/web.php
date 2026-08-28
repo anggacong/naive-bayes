@@ -10,7 +10,10 @@ use App\Http\Controllers\UnigramThreadController;
 use App\Http\Controllers\NaiveBayesTrainingController;
 use App\Http\Controllers\NaiveBayesPengujianController;
 use App\Http\Controllers\NaiveBayesEvaluasiController;
+use App\Http\Controllers\KamusNormalisasiController;
+use App\Http\Controllers\StopwordController;
 use Illuminate\Support\Facades\Route;
+
 
 // Dashboard
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -18,10 +21,12 @@ Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 // Data X
 Route::resource('data-x', DataXController::class)->except(['show']);
 Route::post('data-x/import', [DataXController::class, 'import'])->name('data-x.import');
+Route::post('data-x/destroy-all', [DataXController::class, 'destroyAll'])->name('data-x.destroy-all');
 
 // Data Thread
 Route::resource('data-thread', DataThreadController::class)->except(['show']);
 Route::post('data-thread/import', [DataThreadController::class, 'import'])->name('data-thread.import');
+Route::post('data-thread/destroy-all', [DataThreadController::class, 'destroyAll'])->name('data-thread.destroy-all');
 
 // Preprocessing X
 Route::get('preprocessing/x', [PreprocessingXController::class, 'index'])->name('preprocessing.x');
@@ -55,4 +60,16 @@ Route::post('naive-bayes/pengujian/prediksi', [NaiveBayesPengujianController::cl
 
 // Naive Bayes - Evaluasi
 Route::get('naive-bayes/evaluasi', [NaiveBayesEvaluasiController::class, 'index'])->name('naive-bayes.evaluasi');
+
+// Kamus Normalisasi (CRUD: index, store, update, destroy)
+Route::get('kamus-normalisasi', [KamusNormalisasiController::class, 'index'])->name('kamus-normalisasi.index');
+Route::post('kamus-normalisasi', [KamusNormalisasiController::class, 'store'])->name('kamus-normalisasi.store');
+Route::put('kamus-normalisasi/{id}', [KamusNormalisasiController::class, 'update'])->name('kamus-normalisasi.update');
+Route::delete('kamus-normalisasi/{id}', [KamusNormalisasiController::class, 'destroy'])->name('kamus-normalisasi.destroy');
+
+// Stopwords (CRUD: index, store, destroy)
+Route::get('stopwords', [StopwordController::class, 'index'])->name('stopwords.index');
+Route::post('stopwords', [StopwordController::class, 'store'])->name('stopwords.store');
+Route::delete('stopwords/{id}', [StopwordController::class, 'destroy'])->name('stopwords.destroy');
+
 

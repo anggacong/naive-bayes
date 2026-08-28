@@ -2518,7 +2518,6 @@ return array (
   'mbaknyaahh' => 'mbaknya',
   'mbakx' => 'mbaknya',
   'mbanya' => 'mbaknya',
-  'mbg' => 'mbak',
   'mbil' => 'sambil',
   'mbk' => 'mbak',
   'mblo' => 'jomblo',

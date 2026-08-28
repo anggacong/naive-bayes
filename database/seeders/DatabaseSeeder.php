@@ -25,6 +25,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             DataXSeeder::class,
             DataThreadSeeder::class,
+            KamusNormalisasiSeeder::class,
+            StopwordSeeder::class,
         ]);
     }
 }

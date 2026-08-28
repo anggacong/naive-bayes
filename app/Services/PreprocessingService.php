@@ -13,8 +13,9 @@ class PreprocessingService
 
     public function __construct()
     {
-        $this->kamusNormalisasi = require app_path('Data/kamus_normalisasi.php');
-        $this->stopwords = require app_path('Data/stopwords.php');
+        // Load dari database satu kali ke memori agar preprocessing di dalam loop tetap sangat cepat
+        $this->kamusNormalisasi = \App\Models\KamusNormalisasi::pluck('formal', 'slang')->toArray();
+        $this->stopwords = \App\Models\Stopword::pluck('kata')->toArray();
 
         $stemmerFactory = new StemmerFactory();
         $this->stemmer = $stemmerFactory->createStemmer();

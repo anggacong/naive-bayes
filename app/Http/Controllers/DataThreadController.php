@@ -8,9 +8,23 @@ use Illuminate\Http\Request;
 
 class DataThreadController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = DataThread::latest()->paginate(15);
+        $query = DataThread::query();
+
+        if ($request->filled('q')) {
+            $keyword = trim($request->q);
+            $query->where(function ($q) use ($keyword) {
+                $q->where('username', 'like', "%{$keyword}%")
+                  ->orWhere('teks_asli', 'like', "%{$keyword}%");
+            });
+        }
+
+        if ($request->filled('sentimen')) {
+            $query->where('sentimen', $request->sentimen);
+        }
+
+        $data = $query->latest()->paginate(15)->withQueryString();
         return view('data-thread.index', compact('data'));
     }
 
@@ -176,5 +190,25 @@ class DataThreadController extends Controller
 
         return redirect()->route('data-thread.index')
             ->with('success', "Berhasil mengimpor {$count} data Thread.");
+    }
+
+    /**
+     * Hapus semua Data Thread jika seluruh proses (Preprocessing, Unigram, Naive Bayes) telah di-reset
+     */
+    public function destroyAll()
+    {
+        $hasPreprocessing = \App\Models\PreprocessingThread::count() > 0;
+        $hasUnigram       = \App\Models\UnigramThread::count() > 0;
+        $hasNbHasil       = \App\Models\NaiveBayesHasil::where('sumber', 'thread')->count() > 0;
+        $hasNbModel       = \App\Models\NaiveBayesModel::where('sumber', 'thread')->count() > 0;
+
+        if ($hasPreprocessing || $hasUnigram || $hasNbHasil || $hasNbModel) {
+            return redirect()->back()->with('error', 'Gagal menghapus data! Seluruh proses (Preprocessing, Unigram, atau Naive Bayes Data Thread) harus di-reset terlebih dahulu.');
+        }
+
+        DataThread::query()->delete();
+
+        return redirect()->route('data-thread.index')
+            ->with('success', 'Semua Data Thread berhasil dihapus.');
     }
 }

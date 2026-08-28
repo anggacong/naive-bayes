@@ -23,6 +23,19 @@
             <input type="file" id="import_file_x" name="file" accept=".xlsx,.xls,.csv,.txt" class="hidden" onchange="this.form.submit()">
         </form>
 
+        @if($data->total() > 0)
+        {{-- Hapus Semua Data --}}
+        <form action="{{ route('data-x.destroy-all') }}" method="POST" id="form-destroy-all-x" class="inline">
+            @csrf
+            <button type="button" onclick="confirmDestroyAllX()" class="btn btn-outline btn-sm border-rose-500/50 text-rose-400 hover:bg-rose-500/10 hover:border-rose-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Hapus Semua Data
+            </button>
+        </form>
+        @endif
+
         <a href="{{ route('data-x.create') }}" class="btn btn-primary btn-sm">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
@@ -30,6 +43,39 @@
             Tambah Data
         </a>
     </div>
+</div>
+
+{{-- Search & Filter Bar --}}
+<div class="card mb-6 p-4">
+    <form method="GET" action="{{ route('data-x.index') }}" class="flex flex-col md:flex-row items-center gap-3">
+        <div class="relative flex-1 w-full">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+            <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari username atau teks asli Data X..."
+                   class="form-control pl-10 w-full text-sm">
+        </div>
+        <div class="w-full md:w-44">
+            <select name="sentimen" class="form-control text-sm w-full" onchange="this.form.submit()">
+                <option value="">Semua Sentimen</option>
+                <option value="positif" {{ request('sentimen') === 'positif' ? 'selected' : '' }}>Positif</option>
+                <option value="negatif" {{ request('sentimen') === 'negatif' ? 'selected' : '' }}>Negatif</option>
+                <option value="netral" {{ request('sentimen') === 'netral' ? 'selected' : '' }}>Netral</option>
+            </select>
+        </div>
+        <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+            <button type="submit" class="btn btn-primary btn-sm px-4">
+                Cari
+            </button>
+            @if(request()->hasAny(['q', 'sentimen']))
+                <a href="{{ route('data-x.index') }}" class="btn btn-outline btn-sm px-4">
+                    Reset
+                </a>
+            @endif
+        </div>
+    </form>
 </div>
 
 {{-- Table --}}
@@ -94,10 +140,9 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </a>
-                                <form action="{{ route('data-x.destroy', $item) }}" method="POST"
-                                      onsubmit="return confirm('Hapus data ini?')">
+                                <form action="{{ route('data-x.destroy', $item) }}" method="POST" id="form-delete-x-{{ $item->id }}" class="inline">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-outline btn-icon btn-sm" title="Hapus">
+                                    <button type="button" onclick="confirmDeleteX({{ $item->id }})" class="btn btn-outline btn-icon btn-sm" title="Hapus">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
@@ -154,8 +199,74 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                     </span>
                 @endif
-            </div>
-        </div>
     @endif
 </div>
+
+@push('scripts')
+<script>
+function confirmDeleteX(id) {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Hapus Data X?',
+            text: 'Data X ini akan dihapus secara permanen.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus',
+            cancelButtonText: 'Batal',
+            buttonsStyling: false,
+            background: '#1e1e2e',
+            color: '#f8fafc',
+            customClass: {
+                popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                title: 'text-lg font-bold text-white mb-2',
+                htmlContainer: 'text-sm text-slate-300',
+                actions: 'flex items-center justify-center gap-3 mt-4',
+                confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
+                cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 transition-all duration-200 cursor-pointer'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('form-delete-x-' + id).submit();
+            }
+        });
+    } else {
+        if (confirm('Hapus data ini?')) {
+            document.getElementById('form-delete-x-' + id).submit();
+        }
+    }
+}
+
+function confirmDestroyAllX() {
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: 'Hapus Semua Data X?',
+            html: 'Apakah Anda yakin ingin menghapus <strong>seluruh Data X</strong>?<br><small class="text-slate-400">Catatan: Seluruh proses (Preprocessing, Unigram, Naive Bayes) harus di-reset terlebih dahulu.</small>',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus Semua',
+            cancelButtonText: 'Batal',
+            buttonsStyling: false,
+            background: '#1e1e2e',
+            color: '#f8fafc',
+            customClass: {
+                popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                title: 'text-lg font-bold text-white mb-2',
+                htmlContainer: 'text-sm text-slate-300',
+                actions: 'flex items-center justify-center gap-3 mt-4',
+                confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
+                cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 transition-all duration-200 cursor-pointer'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('form-destroy-all-x').submit();
+            }
+        });
+    } else {
+        if (confirm('Apakah Anda yakin ingin menghapus seluruh Data X? Semua proses harus di-reset terlebih dahulu.')) {
+            document.getElementById('form-destroy-all-x').submit();
+        }
+    }
+}
+</script>
+@endpush
 @endsection

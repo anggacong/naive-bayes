@@ -133,6 +133,23 @@
             </svg>
             Evaluasi
         </a>
+
+        {{-- Manajemen Kamus --}}
+        <div class="nav-section-title mt-2">Manajemen Kamus</div>
+        <a href="{{ route('kamus-normalisasi.index') }}"
+           class="nav-item {{ request()->routeIs('kamus-normalisasi.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+            </svg>
+            Kamus Normalisasi
+        </a>
+        <a href="{{ route('stopwords.index') }}"
+           class="nav-item {{ request()->routeIs('stopwords.*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+            Stopwords
+        </a>
     </nav>
 
     {{-- Footer sidebar --}}
@@ -268,5 +285,6 @@
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 </script>
 
+@stack('scripts')
 </body>
 </html>

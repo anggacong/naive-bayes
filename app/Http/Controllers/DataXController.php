@@ -8,9 +8,23 @@ use Illuminate\Http\Request;
 
 class DataXController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = DataX::latest()->paginate(15);
+        $query = DataX::query();
+
+        if ($request->filled('q')) {
+            $keyword = trim($request->q);
+            $query->where(function ($q) use ($keyword) {
+                $q->where('username', 'like', "%{$keyword}%")
+                  ->orWhere('teks_asli', 'like', "%{$keyword}%");
+            });
+        }
+
+        if ($request->filled('sentimen')) {
+            $query->where('sentimen', $request->sentimen);
+        }
+
+        $data = $query->latest()->paginate(15)->withQueryString();
         return view('data-x.index', compact('data'));
     }
 
@@ -176,5 +190,25 @@ class DataXController extends Controller
 
         return redirect()->route('data-x.index')
             ->with('success', "Berhasil mengimpor {$count} data X.");
+    }
+
+    /**
+     * Hapus semua Data X jika seluruh proses (Preprocessing, Unigram, Naive Bayes) telah di-reset
+     */
+    public function destroyAll()
+    {
+        $hasPreprocessing = \App\Models\PreprocessingX::count() > 0;
+        $hasUnigram       = \App\Models\UnigramX::count() > 0;
+        $hasNbHasil       = \App\Models\NaiveBayesHasil::where('sumber', 'x')->count() > 0;
+        $hasNbModel       = \App\Models\NaiveBayesModel::where('sumber', 'x')->count() > 0;
+
+        if ($hasPreprocessing || $hasUnigram || $hasNbHasil || $hasNbModel) {
+            return redirect()->back()->with('error', 'Gagal menghapus data! Seluruh proses (Preprocessing, Unigram, atau Naive Bayes Data X) harus di-reset terlebih dahulu.');
+        }
+
+        DataX::query()->delete();
+
+        return redirect()->route('data-x.index')
+            ->with('success', 'Semua Data X berhasil dihapus.');
     }
 }
