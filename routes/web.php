@@ -7,12 +7,15 @@ use App\Http\Controllers\PreprocessingXController;
 use App\Http\Controllers\PreprocessingThreadController;
 use App\Http\Controllers\UnigramXController;
 use App\Http\Controllers\UnigramThreadController;
+use App\Http\Controllers\UnigramFrekuensiXController;
+use App\Http\Controllers\UnigramFrekuensiThreadController;
 use App\Http\Controllers\NaiveBayesTrainingController;
 use App\Http\Controllers\NaiveBayesPengujianController;
 use App\Http\Controllers\NaiveBayesEvaluasiController;
 use App\Http\Controllers\KamusNormalisasiController;
 use App\Http\Controllers\StopwordController;
 use Illuminate\Support\Facades\Route;
+
 
 
 // Dashboard
@@ -38,15 +41,22 @@ Route::get('preprocessing/thread', [PreprocessingThreadController::class, 'index
 Route::post('preprocessing/thread/proses', [PreprocessingThreadController::class, 'proses'])->name('preprocessing.thread.proses');
 Route::post('preprocessing/thread/reset', [PreprocessingThreadController::class, 'reset'])->name('preprocessing.thread.reset');
 
-// Unigram X
+// Unigram X (TF-IDF) — disembunyikan dari menu, route tetap aktif
 Route::get('unigram/x', [UnigramXController::class, 'index'])->name('unigram.x');
 Route::post('unigram/x/hitung', [UnigramXController::class, 'hitung'])->name('unigram.x.hitung');
 Route::post('unigram/x/reset', [UnigramXController::class, 'reset'])->name('unigram.x.reset');
 
-// Unigram Thread
+// Unigram Thread (TF-IDF) — disembunyikan dari menu, route tetap aktif
 Route::get('unigram/thread', [UnigramThreadController::class, 'index'])->name('unigram.thread');
 Route::post('unigram/thread/hitung', [UnigramThreadController::class, 'hitung'])->name('unigram.thread.hitung');
 Route::post('unigram/thread/reset', [UnigramThreadController::class, 'reset'])->name('unigram.thread.reset');
+
+// Unigram Frekuensi X
+Route::get('unigram-frekuensi/x', [UnigramFrekuensiXController::class, 'index'])->name('unigram-frekuensi.x');
+
+// Unigram Frekuensi Thread
+Route::get('unigram-frekuensi/thread', [UnigramFrekuensiThreadController::class, 'index'])->name('unigram-frekuensi.thread');
+
 
 // Naive Bayes - Pelatihan Model
 Route::get('naive-bayes/training', [NaiveBayesTrainingController::class, 'index'])->name('naive-bayes.training');

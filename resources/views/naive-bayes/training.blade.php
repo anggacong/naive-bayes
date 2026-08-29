@@ -149,6 +149,13 @@
                 <div class="text-[10px] text-slate-400 mt-1">
                     P({{ $p->sentimen }}) = {{ round(exp($p->nilai_log), 6) }}
                 </div>
+                @php $docCount = $jumlahPerKelas[$p->sentimen] ?? 0; @endphp
+                <div class="mt-2 pt-2 border-t border-current border-opacity-20 flex items-center justify-between">
+                    <span class="text-[10px] text-slate-400">Jumlah Dokumen</span>
+                    <span class="text-xs font-bold font-mono text-slate-100">
+                        {{ $docCount }} <span class="text-[10px] text-slate-500 font-normal">/ {{ $totalTraining }}</span>
+                    </span>
+                </div>
             </div>
             @endforeach
         </div>

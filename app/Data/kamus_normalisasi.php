@@ -2132,6 +2132,7 @@ return array (
   'koperasinya' => 'koperasi',
   'koplak' => 'kocak',
   'koplakkk' => 'koplak',
+  'kopdes' => 'koperasi desa merah putih',
   'kopmeput' => 'koperasi merah putih',
   'kopmer' => 'koperasi merah putih',
   'kopras' => 'koperasi',

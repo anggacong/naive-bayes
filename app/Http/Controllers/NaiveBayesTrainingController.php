@@ -26,6 +26,14 @@ class NaiveBayesTrainingController extends Controller
         $totalTraining = NaiveBayesHasil::where('sumber', $sumber)->where('split', 'train')->count();
         $totalTesting = NaiveBayesHasil::where('sumber', $sumber)->where('split', 'test')->count();
 
+        // Jumlah dokumen per kelas (dari data training)
+        $jumlahPerKelas = NaiveBayesHasil::where('sumber', $sumber)
+            ->where('split', 'train')
+            ->selectRaw('sentimen_asli, COUNT(*) as jumlah')
+            ->groupBy('sentimen_asli')
+            ->pluck('jumlah', 'sentimen_asli')
+            ->toArray();
+
         // Prior
         $prior = NaiveBayesModel::where('sumber', $sumber)
             ->where('tipe', 'prior')
@@ -72,6 +80,7 @@ class NaiveBayesTrainingController extends Controller
             'totalTesting',
             'totalVocab',
             'prior',
+            'jumlahPerKelas',
             'paginator',
             'search'
         ));

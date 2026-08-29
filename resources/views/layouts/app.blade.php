@@ -88,7 +88,10 @@
             Preprocessing Data Thread
         </a>
 
-        {{-- Unigram (TF-IDF) --}}
+        {{-- =====================================================
+             Unigram (TF-IDF) — DISEMBUNYIKAN SEMENTARA
+             Aktifkan kembali jika dibutuhkan untuk analisis TF-IDF
+             =====================================================
         <div class="nav-section-title mt-2">Unigram (TF-IDF)</div>
         <a href="{{ route('unigram.x') }}"
            class="nav-item {{ request()->routeIs('unigram.x*') ? 'active' : '' }}">
@@ -100,6 +103,26 @@
         </a>
         <a href="{{ route('unigram.thread') }}"
            class="nav-item {{ request()->routeIs('unigram.thread*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+            </svg>
+            Unigram Data Thread
+        </a>
+        --}}
+
+        {{-- Unigram (Frekuensi) --}}
+        <div class="nav-section-title mt-2">Unigram</div>
+        <a href="{{ route('unigram-frekuensi.x') }}"
+           class="nav-item {{ request()->routeIs('unigram-frekuensi.x*') ? 'active' : '' }}">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
+            </svg>
+            Unigram Data X
+        </a>
+        <a href="{{ route('unigram-frekuensi.thread') }}"
+           class="nav-item {{ request()->routeIs('unigram-frekuensi.thread*') ? 'active' : '' }}">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>

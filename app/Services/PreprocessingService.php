@@ -102,12 +102,13 @@ class PreprocessingService
 
     // ─────────────────────────────────────────────────────────────
     // 4. REPEATED CHARACTER REMOVAL
-    //    Kompress karakter berulang > 2: "bagussss" → "bagus"
+    //    Kompress karakter berulang ≥ 2 menjadi 1: "ayoo"→"ayo", "taeekk"→"taek", "bagussss"→"bagus"
     // ─────────────────────────────────────────────────────────────
     public function repeatedCharRemoval(array $tokens): array
     {
         return array_map(function (string $token) {
-            return preg_replace('/(.)\1{2,}/', '$1$1', $token);
+            // Kurangi karakter yang muncul 2x atau lebih berturutan menjadi 1
+            return preg_replace('/(.)\1+/', '$1', $token);
         }, $tokens);
     }
 
