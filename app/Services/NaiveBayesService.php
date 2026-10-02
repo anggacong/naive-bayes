@@ -24,7 +24,7 @@ class NaiveBayesService
      * Latih model Naive Bayes dari preprocessing data.
      * @param string $sumber 'x' | 'thread'
      */
-    public function latih(string $sumber): array
+    public function latih(string $sumber, bool $random = true): array
     {
         // 1. Ambil semua data yang sudah dipreprocess
         $data = $this->ambilData($sumber);
@@ -33,8 +33,8 @@ class NaiveBayesService
             return ['error' => 'Tidak ada data preprocessing. Jalankan preprocessing terlebih dahulu.'];
         }
 
-        // 2. Shuffle & split 80/20
-        $shuffled = $data->shuffle();
+        // 2. Shuffle (acak) atau sequential (berurutan) & split 80/20
+        $shuffled = $random ? $data->shuffle() : $data->values();
         $total    = $shuffled->count();
         $trainN   = (int) ceil($total * self::TRAIN_RATIO);
         $train    = $shuffled->take($trainN);
@@ -101,6 +101,8 @@ class NaiveBayesService
                 $count       = $freqPerKelas[$kelas][$kata] ?? 0;
                 $total       = array_sum($freqPerKelas[$kelas]);
                 $prob        = ($count + self::ALPHA) / ($total + self::ALPHA * $V);
+
+
                 $likeRecords[] = [
                     'sumber'     => $sumber,
                     'tipe'       => 'likelihood',
@@ -159,7 +161,7 @@ class NaiveBayesService
      *  PENGUJIAN (BATCH)
      * ═══════════════════════════════════════════════════════════ */
 
-    public function uji(string $sumber): array
+    public function uji(string $sumber, bool $random = true): array
     {
         // Load model
         $prior      = $this->loadPrior($sumber);
@@ -169,10 +171,14 @@ class NaiveBayesService
             return ['error' => 'Model belum dilatih. Jalankan Pelatihan terlebih dahulu.'];
         }
 
-        // Ambil data testing
+        // Ambil data testing (acak atau berurutan)
         $testing = NaiveBayesHasil::where('sumber', $sumber)
             ->where('split', 'test')
             ->get();
+
+        if ($random) {
+            $testing = $testing->shuffle();
+        }
 
         if ($testing->isEmpty()) {
             return ['error' => 'Tidak ada data testing.'];
@@ -288,7 +294,9 @@ class NaiveBayesService
         $macroF1      = round(array_sum(array_column($metrik, 'f1'))      / count($kelas), 4);
 
         // Weighted Average
-        $weightedPresisi = 0; $weightedRecall = 0; $weightedF1 = 0;
+        $weightedPresisi = 0;
+        $weightedRecall = 0;
+        $weightedF1 = 0;
         foreach ($kelas as $k) {
             $w = $metrik[$k]['support'] / max($total, 1);
             $weightedPresisi += $metrik[$k]['presisi'] * $w;

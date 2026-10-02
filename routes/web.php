@@ -14,9 +14,12 @@ use App\Http\Controllers\NaiveBayesPengujianController;
 use App\Http\Controllers\NaiveBayesEvaluasiController;
 use App\Http\Controllers\KamusNormalisasiController;
 use App\Http\Controllers\StopwordController;
+use App\Services\NaiveBayesService;
 use Illuminate\Support\Facades\Route;
 
-
+Route::get('/debug-latih-x', function (NaiveBayesService $service) {
+    return $service->latih('x');
+});
 
 // Dashboard
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -81,5 +84,3 @@ Route::delete('kamus-normalisasi/{id}', [KamusNormalisasiController::class, 'des
 Route::get('stopwords', [StopwordController::class, 'index'])->name('stopwords.index');
 Route::post('stopwords', [StopwordController::class, 'store'])->name('stopwords.store');
 Route::delete('stopwords/{id}', [StopwordController::class, 'destroy'])->name('stopwords.destroy');
-
-

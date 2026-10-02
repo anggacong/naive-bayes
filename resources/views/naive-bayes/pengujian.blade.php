@@ -34,13 +34,25 @@
         <form id="form-uji-batch" action="{{ route('naive-bayes.pengujian.batch') }}" method="POST">
             @csrf
             <input type="hidden" name="sumber" value="{{ $sumber }}">
-            <button type="button" onclick="konfirmasiUjiBatch()" class="btn btn-primary bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                </svg>
-                Jalankan Pengujian Batch (Data Uji 20%)
-            </button>
+            <input type="hidden" name="random" id="input-random-uji" value="1">
+            <div class="flex items-center gap-2">
+                {{-- Tombol Uji Acak --}}
+                <button type="button" onclick="konfirmasiUjiBatch(1)"
+                    class="btn btn-primary bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-2 shadow-lg shadow-purple-600/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                    Uji Acak (Random)
+                </button>
+                {{-- Tombol Uji Berurutan --}}
+                <button type="button" onclick="konfirmasiUjiBatch(0)"
+                    class="btn bg-gradient-to-r from-cyan-600 to-teal-600 hover:from-cyan-500 hover:to-teal-500 text-white font-medium px-4 py-2 rounded-lg text-xs flex items-center gap-2 shadow-lg shadow-cyan-600/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                    </svg>
+                    Uji Berurutan (Tidak Acak)
+                </button>
+            </div>
         </form>
         @endif
     </div>
@@ -164,6 +176,85 @@
         </div>
     </div>
 
+    {{-- Distribusi Hasil Prediksi per Kelas --}}
+    @if($totalDiuji > 0)
+    <div class="card p-6">
+        <h3 class="text-sm font-semibold text-slate-200 flex items-center gap-2 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+            </svg>
+            Distribusi Hasil Prediksi per Kelas
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+            {{-- Positif --}}
+            <div class="p-4 rounded-xl border border-emerald-500/30 bg-emerald-500/5">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Positif</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono border border-slate-700">
+                        {{ $distribusiPrediksi['positif']['persen'] }}%
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-slate-100 font-mono">
+                    {{ number_format($distribusiPrediksi['positif']['jumlah']) }}
+                    <span class="text-base font-normal text-slate-400 ml-1">data</span>
+                </div>
+                <div class="mt-3">
+                    <div class="w-full bg-slate-800 rounded-full h-1.5">
+                        <div class="bg-emerald-500 h-1.5 rounded-full transition-all duration-700"
+                             style="width: {{ $distribusiPrediksi['positif']['persen'] }}%"></div>
+                    </div>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-2">dari {{ number_format($totalDiuji) }} data yang diuji</div>
+            </div>
+
+            {{-- Negatif --}}
+            <div class="p-4 rounded-xl border border-rose-500/30 bg-rose-500/5">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-rose-400">Negatif</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono border border-slate-700">
+                        {{ $distribusiPrediksi['negatif']['persen'] }}%
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-slate-100 font-mono">
+                    {{ number_format($distribusiPrediksi['negatif']['jumlah']) }}
+                    <span class="text-base font-normal text-slate-400 ml-1">data</span>
+                </div>
+                <div class="mt-3">
+                    <div class="w-full bg-slate-800 rounded-full h-1.5">
+                        <div class="bg-rose-500 h-1.5 rounded-full transition-all duration-700"
+                             style="width: {{ $distribusiPrediksi['negatif']['persen'] }}%"></div>
+                    </div>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-2">dari {{ number_format($totalDiuji) }} data yang diuji</div>
+            </div>
+
+            {{-- Netral --}}
+            <div class="p-4 rounded-xl border border-amber-500/30 bg-amber-500/5">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-xs font-bold uppercase tracking-wider text-amber-400">Netral</span>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-mono border border-slate-700">
+                        {{ $distribusiPrediksi['netral']['persen'] }}%
+                    </span>
+                </div>
+                <div class="text-3xl font-extrabold text-slate-100 font-mono">
+                    {{ number_format($distribusiPrediksi['netral']['jumlah']) }}
+                    <span class="text-base font-normal text-slate-400 ml-1">data</span>
+                </div>
+                <div class="mt-3">
+                    <div class="w-full bg-slate-800 rounded-full h-1.5">
+                        <div class="bg-amber-500 h-1.5 rounded-full transition-all duration-700"
+                             style="width: {{ $distribusiPrediksi['netral']['persen'] }}%"></div>
+                    </div>
+                </div>
+                <div class="text-[10px] text-slate-500 mt-2">dari {{ number_format($totalDiuji) }} data yang diuji</div>
+            </div>
+
+        </div>
+    </div>
+    @endif
+
     {{-- Testing Data Table --}}
     <div class="card p-6">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#3f3f5a]">
@@ -174,15 +265,15 @@
         </div>
 
         <div class="mt-4 overflow-x-auto">
-            <table class="w-full text-left text-xs">
+            <table class="w-full text-xs">
                 <thead>
                     <tr class="bg-[#1c1c2b] text-slate-400 uppercase text-[10px] border-b border-[#3f3f5a]">
-                        <th class="py-3 px-4">No</th>
-                        <th class="py-3 px-4">Pengguna</th>
-                        <th class="py-3 px-4">Teks Postingan</th>
-                        <th class="py-3 px-4 text-center">Label Asli</th>
-                        <th class="py-3 px-4 text-center">Prediksi Model</th>
-                        <th class="py-3 px-4 text-center">Hasil Evaluasi</th>
+                        <th class="py-3 px-4 w-12 text-center" style="text-align: center !important;">No</th>
+                        <th class="py-3 px-4 text-left" style="text-align: left !important;">Pengguna</th>
+                        <th class="py-3 px-4 text-left" style="text-align: left !important;">Teks Postingan</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">Label Asli</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">Prediksi Model</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">Hasil Evaluasi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#2d2d42]">
@@ -202,24 +293,24 @@
                         };
                     @endphp
                     <tr class="hover:bg-[#1f1f30] transition-colors">
-                        <td class="py-3 px-4 text-slate-400">{{ ($testingData->currentPage() - 1) * $testingData->perPage() + $idx + 1 }}</td>
-                        <td class="py-3 px-4 font-semibold text-indigo-400">
+                        <td class="py-3 px-4 text-center text-slate-400 font-mono" style="text-align: center !important;">{{ ($testingData->currentPage() - 1) * $testingData->perPage() + $idx + 1 }}</td>
+                        <td class="py-3 px-4 text-left font-semibold text-indigo-400" style="text-align: left !important;">
                             {{ $row->data_asli && $row->data_asli->username ? '@' . $row->data_asli->username : '-' }}
                         </td>
-                        <td class="py-3 px-4 text-slate-300 max-w-md line-clamp-2">
+                        <td class="py-3 px-4 text-left text-slate-300 max-w-md line-clamp-2" style="text-align: left !important;">
                             {{ $row->data_asli->teks_asli ?? '-' }}
                         </td>
-                        <td class="py-3 px-4 text-center">
+                        <td class="py-3 px-4 text-center" style="text-align: center !important;">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border {{ $badgeAsli }}">
                                 {{ $row->sentimen_asli }}
                             </span>
                         </td>
-                        <td class="py-3 px-4 text-center">
+                        <td class="py-3 px-4 text-center" style="text-align: center !important;">
                             <span class="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border {{ $badgePred }}">
                                 {{ $row->sentimen_prediksi ?? 'BELUM DIUJI' }}
                             </span>
                         </td>
-                        <td class="py-3 px-4 text-center">
+                        <td class="py-3 px-4 text-center" style="text-align: center !important;">
                             @if($row->sentimen_prediksi === null)
                                 <span class="text-[10px] text-slate-500 italic">-</span>
                             @elseif($row->benar)
@@ -253,14 +344,27 @@
 </div>
 
 <script>
-function konfirmasiUjiBatch() {
+function konfirmasiUjiBatch(random) {
     const sumberNama = "{{ $sumber === 'x' ? 'Data X (Twitter)' : 'Data Thread' }}";
+    const modeLabel  = random ? '🔀 <b>Acak (Random)</b>' : '📋 <b>Berurutan (Tidak Acak)</b>';
+    const modeTeks   = random
+        ? 'Data uji akan <b>diacak urutannya (shuffle)</b> sebelum dievaluasi.'
+        : 'Data uji akan diproses secara <b>berurutan (sequential)</b> sesuai urutan aslinya.';
+    const konfirmBtn = random ? 'Ya, Uji Acak' : 'Ya, Uji Berurutan';
+    const btnClass   = random
+        ? 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95'
+        : 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-cyan-600 hover:bg-cyan-500 text-white shadow-lg shadow-cyan-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95';
+
+    // Set hidden input sesuai mode
+    document.getElementById('input-random-uji').value = random ? '1' : '0';
+
     Swal.fire({
         title: 'Jalankan Pengujian Batch ' + sumberNama + '?',
-        html: '<p class="text-sm text-slate-300 mb-3">Sistem akan memprediksi seluruh <b>20% Data Testing</b> dan membandingkan hasil klasifikasi dengan label sentimen aktual.</p>',
+        html: '<p class="text-sm text-slate-300 mb-2">Mode: ' + modeLabel + '</p>' +
+              '<p class="text-sm text-slate-300 mb-3">' + modeTeks + ' Sistem akan memprediksi seluruh <b>20% Data Testing</b> dan membandingkan hasil klasifikasi dengan label sentimen aktual.</p>',
         icon: 'question',
         showCancelButton: true,
-        confirmButtonText: 'Ya, Jalankan',
+        confirmButtonText: konfirmBtn,
         cancelButtonText: 'Tidak',
         buttonsStyling: false,
         background: '#1e1e2e',
@@ -270,7 +374,7 @@ function konfirmasiUjiBatch() {
             title: 'text-lg font-bold text-white mb-2',
             htmlContainer: 'text-sm text-slate-300',
             actions: 'flex items-center justify-center gap-3 mt-4',
-            confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
+            confirmButton: btnClass,
             cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95'
         }
     }).then((result) => {

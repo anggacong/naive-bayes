@@ -89,7 +89,8 @@ class NaiveBayesTrainingController extends Controller
     public function latih(Request $request)
     {
         $sumber = $request->input('sumber', 'x');
-        $hasil = $this->nbService->latih($sumber);
+        $random = (bool) $request->input('random', 1);
+        $hasil  = $this->nbService->latih($sumber, $random);
 
         if (isset($hasil['error'])) {
             return redirect()->route('naive-bayes.training', ['sumber' => $sumber])

@@ -3,7 +3,7 @@
 /**
  * Kamus Normalisasi Kata Tidak Baku (Slang/Informal/Typo) -> Baku
  */
-return array (
+return array(
   '22nya' => 'dua-duanya',
   'aaaaaaakkk' => 'ah',
   'aaaaahhhh' => 'ah',
@@ -1860,6 +1860,7 @@ return array (
   'kasiaannn' => 'kasihan',
   'kasian' => 'kasihan',
   'kasiannn' => 'kasihan',
+  'dikasiani' => 'dikasihani',
   'kasiatnya' => 'khasiatnya',
   'kasihn' => 'kasihan',
   'kasiian' => 'kasihan',

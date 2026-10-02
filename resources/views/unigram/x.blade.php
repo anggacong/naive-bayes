@@ -203,34 +203,34 @@
         {{-- TAB 2: GLOBAL VOCABULARY --}}
         @if($tab === 'vocab')
         <div class="mt-6 overflow-x-auto">
-            <table class="w-full text-left text-xs border-collapse">
+            <table class="w-full text-xs border-collapse">
                 <thead>
                     <tr class="bg-[#1c1c2b] text-slate-400 uppercase text-[10px] border-b border-[#3f3f5a]">
-                        <th class="py-3 px-4 w-12 text-center">No</th>
-                        <th class="py-3 px-4">Kata / Term (Unigram)</th>
-                        <th class="py-3 px-4 text-center">DF (Doc Freq)</th>
-                        <th class="py-3 px-4 text-center">IDF</th>
-                        <th class="py-3 px-4 text-right">TF-IDF (Positif)</th>
-                        <th class="py-3 px-4 text-right">TF-IDF (Negatif)</th>
-                        <th class="py-3 px-4 text-right">TF-IDF (Netral)</th>
-                        <th class="py-3 px-4 text-right font-bold text-indigo-400">Total TF-IDF</th>
+                        <th class="py-3 px-4 w-12 text-center" style="text-align: center !important;">No</th>
+                        <th class="py-3 px-4 text-left" style="text-align: left !important;">Kata / Term (Unigram)</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">DF (Doc Freq)</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">IDF</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">TF-IDF (Positif)</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">TF-IDF (Negatif)</th>
+                        <th class="py-3 px-4 text-center" style="text-align: center !important;">TF-IDF (Netral)</th>
+                        <th class="py-3 px-4 text-center font-bold text-indigo-400" style="text-align: center !important;">Total TF-IDF</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#2d2d42]">
                     @forelse($vocabulary as $idx => $v)
                     <tr class="hover:bg-[#1f1f30] transition-colors">
-                        <td class="py-2.5 px-4 text-center text-slate-400 font-mono">{{ $idx + 1 }}</td>
-                        <td class="py-2.5 px-4 font-semibold text-slate-200">{{ $v->kata }}</td>
-                        <td class="py-2.5 px-4 text-center text-slate-300 font-mono">{{ $v->df }}</td>
-                        <td class="py-2.5 px-4 text-center text-slate-300 font-mono">{{ $v->idf }}</td>
-                        <td class="py-2.5 px-4 text-right text-emerald-400 font-mono">{{ round($v->tfidf_positif, 4) }}</td>
-                        <td class="py-2.5 px-4 text-right text-rose-400 font-mono">{{ round($v->tfidf_negatif, 4) }}</td>
-                        <td class="py-2.5 px-4 text-right text-amber-400 font-mono">{{ round($v->tfidf_netral, 4) }}</td>
-                        <td class="py-2.5 px-4 text-right font-bold text-indigo-400 font-mono">{{ round($v->total_tfidf, 4) }}</td>
+                        <td class="py-2.5 px-4 text-center text-slate-400 font-mono" style="text-align: center !important;">{{ $idx + 1 }}</td>
+                        <td class="py-2.5 px-4 text-left font-semibold text-slate-200" style="text-align: left !important;">{{ $v->kata }}</td>
+                        <td class="py-2.5 px-4 text-center text-slate-300 font-mono" style="text-align: center !important;">{{ $v->df }}</td>
+                        <td class="py-2.5 px-4 text-center text-slate-300 font-mono" style="text-align: center !important;">{{ $v->idf }}</td>
+                        <td class="py-2.5 px-4 text-center text-emerald-400 font-mono" style="text-align: center !important;">{{ round($v->tfidf_positif, 4) }}</td>
+                        <td class="py-2.5 px-4 text-center text-rose-400 font-mono" style="text-align: center !important;">{{ round($v->tfidf_negatif, 4) }}</td>
+                        <td class="py-2.5 px-4 text-center text-amber-400 font-mono" style="text-align: center !important;">{{ round($v->tfidf_netral, 4) }}</td>
+                        <td class="py-2.5 px-4 text-center font-bold text-indigo-400 font-mono" style="text-align: center !important;">{{ round($v->total_tfidf, 4) }}</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center py-12 text-slate-400">
+                        <td colspan="8" class="text-center py-12 text-slate-400" style="text-align: center !important;">
                             Belum ada data vocabulary TF-IDF. Klik tombol "Hitung TF-IDF" terlebih dahulu.
                         </td>
                     </tr>

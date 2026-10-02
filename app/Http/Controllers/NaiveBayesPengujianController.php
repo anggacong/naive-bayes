@@ -37,6 +37,24 @@ class NaiveBayesPengujianController extends Controller
         $totalBenar = (clone $testingQuery)->where('benar', true)->count();
         $akurasi = $totalDiuji > 0 ? round(($totalBenar / $totalDiuji) * 100, 2) : 0;
 
+        // Distribusi hasil prediksi per kelas (positif, negatif, netral)
+        $distribusiRaw = (clone $testingQuery)
+            ->whereNotNull('sentimen_prediksi')
+            ->selectRaw('sentimen_prediksi, COUNT(*) as jumlah')
+            ->groupBy('sentimen_prediksi')
+            ->pluck('jumlah', 'sentimen_prediksi')
+            ->toArray();
+
+        $kelas = ['positif', 'negatif', 'netral'];
+        $distribusiPrediksi = [];
+        foreach ($kelas as $k) {
+            $jumlah = $distribusiRaw[$k] ?? 0;
+            $distribusiPrediksi[$k] = [
+                'jumlah'  => $jumlah,
+                'persen'  => $totalDiuji > 0 ? round($jumlah / $totalDiuji * 100, 2) : 0,
+            ];
+        }
+
         $testingData = $testingQuery->paginate(15)->withQueryString();
 
         // Attach original texts
@@ -59,14 +77,17 @@ class NaiveBayesPengujianController extends Controller
             'totalDiuji',
             'totalBenar',
             'akurasi',
+            'distribusiPrediksi',
             'search'
         ));
     }
 
+
     public function batch(Request $request)
     {
         $sumber = $request->input('sumber', 'x');
-        $hasil = $this->nbService->uji($sumber);
+        $random = (bool) $request->input('random', 1);
+        $hasil  = $this->nbService->uji($sumber, $random);
 
         if (isset($hasil['error'])) {
             return redirect()->route('naive-bayes.pengujian', ['sumber' => $sumber])
