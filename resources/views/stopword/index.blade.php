@@ -11,7 +11,7 @@
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Daftar Stopwords</h1>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Kelola kata-kata yang akan dihilangkan saat preprocessing (stopword removal).
-                Total: <span class="font-semibold text-violet-600 dark:text-violet-400">{{ $stopwords->total() }} kata</span>
+                Total: <span class="font-semibold text-violet-600 dark:text-red-600">{{ $stopwords->total() }} kata</span>
             </p>
         </div>
         <button onclick="document.getElementById('modal-tambah').classList.remove('hidden')"
@@ -42,25 +42,25 @@
     @endif
 
     {{-- Search --}}
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+    <div class="card p-4 mb-6">
         <form method="GET" action="{{ route('stopwords.index') }}" class="flex gap-3">
             <div class="relative flex-1">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </div>
                 <input type="text" name="q" value="{{ request('q') }}"
                     placeholder="Cari kata stopword..."
-                    class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-violet-500 outline-none transition">
+                    class="w-full pl-10 pr-4 py-2 text-xs border border-gray-200 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:bg-white transition-colors">
             </div>
             <button type="submit"
-                class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition">
+                class="btn btn-primary text-xs px-4 py-2 rounded-xl">
                 Cari
             </button>
             @if(request('q'))
             <a href="{{ route('stopwords.index') }}"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition">
+                class="btn btn-outline text-xs px-4 py-2 rounded-xl">
                 Reset
             </a>
             @endif
@@ -100,7 +100,7 @@
                             {{ $stopwords->firstItem() + $loop->index }}
                         </td>
                         <td class="px-6 py-3">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-400 font-mono">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-red-600 font-mono">
                                 {{ $item->kata }}
                             </span>
                         </td>
@@ -168,7 +168,7 @@ function confirmDelete(event, kata) {
     const form = event.target;
     Swal.fire({
         title: 'Hapus Stopword?',
-        html: `Kata <strong class="font-mono text-violet-400">${kata}</strong> akan dihapus dari daftar stopword.`,
+        html: `Kata <strong class="font-mono text-red-600">${kata}</strong> akan dihapus dari daftar stopword.`,
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Ya, Hapus',
@@ -177,12 +177,12 @@ function confirmDelete(event, kata) {
         background: '#1e1e2e',
         color: '#f8fafc',
         customClass: {
-            popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+            popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
             title: 'text-lg font-bold text-white mb-2',
-            htmlContainer: 'text-sm text-slate-300',
+            htmlContainer: 'text-sm text-gray-600',
             actions: 'flex items-center justify-center gap-3 mt-4',
             confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
-            cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 transition-all duration-200 cursor-pointer'
+            cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-gray-700 transition-all duration-200 cursor-pointer'
         }
     }).then((result) => {
         if (result.isConfirmed) form.submit();

@@ -20,17 +20,17 @@
     {{-- Logo / Header --}}
     <div class="sidebar-header">
         <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-cyan-500 flex items-center justify-center text-white font-bold text-base shadow-md shadow-indigo-500/20 shrink-0">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-700 via-red-600 to-red-500 flex items-center justify-center text-white font-bold text-base shadow-md shadow-red-700/20 shrink-0">
                 S
             </div>
             <div>
                 <div class="sidebar-logo font-extrabold text-base leading-tight tracking-wide">SentiKMP</div>
-                <div class="text-[10px] text-slate-500 font-medium leading-none mt-0.5">Naive Bayes · Unigram</div>
+                <div class="text-[10px] text-red-200 font-medium leading-none mt-0.5">Naive Bayes · Unigram</div>
             </div>
         </div>
 
         {{-- Mobile Close Button --}}
-        <button type="button" onclick="toggleSidebar()" class="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#252538] transition-colors" title="Tutup Sidebar">
+        <button type="button" onclick="toggleSidebar()" class="lg:hidden p-1.5 rounded-lg text-red-200 hover:text-white hover:bg-white/10 transition-colors" title="Tutup Sidebar">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
             </svg>
@@ -177,7 +177,7 @@
 
     {{-- Footer sidebar --}}
     <div class="sidebar-footer">
-        <div class="text-[10px] text-slate-500 text-center leading-relaxed">
+        <div class="text-[10px] text-white/50 text-center leading-relaxed">
             Koperasi Merah Putih<br>Analisis Sentimen &copy; 2026
         </div>
     </div>
@@ -191,7 +191,7 @@
         <div class="flex items-center gap-3.5">
             {{-- Toggle Button --}}
             <button type="button" onclick="toggleSidebar()" id="sidebarToggleBtn"
-                    class="p-2 rounded-xl bg-[#1e1e2e] border border-[#3f3f5a] text-slate-300 hover:text-white hover:border-indigo-500 hover:bg-[#252538] transition-all cursor-pointer shadow-sm active:scale-95"
+                    class="p-2 rounded-xl bg-white border border-gray-200 text-gray-600 hover:text-red-700 hover:border-red-400 hover:bg-red-50 transition-all cursor-pointer shadow-sm active:scale-95"
                     title="Buka / Tutup Sidebar">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
@@ -200,27 +200,27 @@
 
             <div>
                 <nav class="breadcrumb text-xs">
-                    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-1 text-slate-400 hover:text-indigo-400 transition-colors">
+                    <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-1 text-gray-500 hover:text-red-600 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                         </svg>
                         Home
                     </a>
                     @hasSection('breadcrumb')
-                        <span class="text-slate-600 mx-1">/</span>
+                        <span class="text-gray-500 mx-1">/</span>
                         @yield('breadcrumb')
                     @endif
                 </nav>
-                <h1 class="text-base font-bold text-white tracking-tight leading-tight mt-0.5">@yield('page-title', 'Dashboard')</h1>
+                <h1 class="text-base font-bold text-gray-900 tracking-tight leading-tight mt-0.5">@yield('page-title', 'Dashboard')</h1>
             </div>
         </div>
 
         <div class="flex items-center gap-3">
             <div class="text-right hidden sm:block">
-                <div class="text-[11px] text-slate-400">Koperasi Merah Putih</div>
-                <div class="text-xs font-semibold text-indigo-400">Analisis Sentimen</div>
+                <div class="text-[11px] text-gray-500">Koperasi Merah Putih</div>
+                <div class="text-xs font-semibold text-red-600">Analisis Sentimen</div>
             </div>
-            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-indigo-500/20 border border-indigo-400/30">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-red-700 to-red-500 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-red-700/20 border border-red-400/30">
                 A
             </div>
         </div>
@@ -255,13 +255,13 @@
     <div class="modal-box" id="modalBox">
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-lg font-bold text-white" id="modalTitle">Detail</h3>
-            <button onclick="closeModalDirect()" class="btn btn-outline btn-icon text-slate-400">
+            <button onclick="closeModalDirect()" class="btn btn-outline btn-icon text-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
             </button>
         </div>
-        <div id="modalContent" class="text-sm text-slate-300 leading-relaxed whitespace-pre-wrap"></div>
+        <div id="modalContent" class="text-sm text-gray-600 leading-relaxed whitespace-pre-wrap"></div>
     </div>
 </div>
 

@@ -32,6 +32,20 @@ class NaiveBayesPengujianController extends Controller
         $testingQuery = NaiveBayesHasil::where('sumber', $sumber)
             ->where('split', 'test');
 
+        if (!empty($search)) {
+            $keyword = trim($search);
+            if ($sumber === 'x') {
+                $matchedIds = DataX::where('username', 'like', "%{$keyword}%")
+                    ->orWhere('teks_asli', 'like', "%{$keyword}%")
+                    ->pluck('id');
+            } else {
+                $matchedIds = DataThread::where('username', 'like', "%{$keyword}%")
+                    ->orWhere('teks_asli', 'like', "%{$keyword}%")
+                    ->pluck('id');
+            }
+            $testingQuery->whereIn('data_id', $matchedIds);
+        }
+
         $totalTesting = (clone $testingQuery)->count();
         $totalDiuji = (clone $testingQuery)->whereNotNull('sentimen_prediksi')->count();
         $totalBenar = (clone $testingQuery)->where('benar', true)->count();

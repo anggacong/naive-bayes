@@ -15,20 +15,20 @@
                 </svg>
             </div>
             <div>
-                <div class="text-xs text-slate-400">Total Dokumen Preprocessed</div>
-                <div class="text-2xl font-bold text-slate-100 mt-0.5">{{ number_format($totalDokumen) }}</div>
+                <div class="text-xs text-gray-500">Total Dokumen Preprocessed</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ number_format($totalDokumen) }}</div>
             </div>
         </div>
 
         <div class="card p-4 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 shrink-0">
+            <div class="w-12 h-12 rounded-xl bg-red-100 border border-red-200 flex items-center justify-center text-red-600 shrink-0">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>
                 </svg>
             </div>
             <div>
-                <div class="text-xs text-slate-400">Total Token Unigram (TF-IDF)</div>
-                <div class="text-2xl font-bold text-slate-100 mt-0.5">{{ number_format($totalUnigram) }}</div>
+                <div class="text-xs text-gray-500">Total Token Unigram (TF-IDF)</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ number_format($totalUnigram) }}</div>
             </div>
         </div>
 
@@ -39,8 +39,8 @@
                 </svg>
             </div>
             <div>
-                <div class="text-xs text-slate-400">Kata Unik (Vocabulary)</div>
-                <div class="text-2xl font-bold text-slate-100 mt-0.5">{{ number_format($totalVocab) }}</div>
+                <div class="text-xs text-gray-500">Kata Unik (Vocabulary)</div>
+                <div class="text-2xl font-bold text-gray-800 mt-0.5">{{ number_format($totalVocab) }}</div>
             </div>
         </div>
     </div>
@@ -48,10 +48,10 @@
     {{-- Main Container --}}
     <div class="card p-6">
         {{-- Header & Action Buttons --}}
-        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#3f3f5a]">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-200">
             <div>
-                <h2 class="text-lg font-semibold text-slate-100">Ekstraksi Fitur Unigram & TF-IDF (Thread)</h2>
-                <p class="text-xs text-slate-400 mt-1">Pembobotan kata Unigram menggunakan metode Term Frequency-Inverse Document Frequency (TF-IDF)</p>
+                <h2 class="text-lg font-semibold text-gray-800">Ekstraksi Fitur Unigram & TF-IDF (Thread)</h2>
+                <p class="text-xs text-gray-500 mt-1">Pembobotan kata Unigram menggunakan metode Term Frequency-Inverse Document Frequency (TF-IDF)</p>
             </div>
 
             <div class="flex items-center gap-3">
@@ -79,16 +79,16 @@
 
         {{-- Navigation Tabs --}}
         <div class="flex items-center justify-between gap-4 mt-6">
-            <div class="flex items-center gap-2 border-b border-[#3f3f5a] w-full">
+            <div class="flex items-center gap-2 border-b border-gray-200 w-full">
                 <a href="{{ route('unigram.thread', ['tab' => 'dokumen']) }}"
-                   class="px-4 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-2 transition-colors {{ $tab === 'dokumen' ? 'border-indigo-500 text-indigo-400' : 'border-transparent text-slate-400 hover:text-slate-200' }}">
+                   class="px-4 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-2 transition-colors {{ $tab === 'dokumen' ? 'border-red-500 text-red-600' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                     </svg>
                     Tampilan Per Dokumen
                 </a>
                 <a href="{{ route('unigram.thread', ['tab' => 'vocab']) }}"
-                   class="px-4 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-2 transition-colors {{ $tab === 'vocab' ? 'border-indigo-500 text-indigo-400' : 'border-transparent text-slate-400 hover:text-slate-200' }}">
+                   class="px-4 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-2 transition-colors {{ $tab === 'vocab' ? 'border-red-500 text-red-600' : 'border-transparent text-gray-500 hover:text-gray-700' }}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                     </svg>
@@ -102,10 +102,10 @@
             <form action="{{ route('unigram.thread') }}" method="GET" class="flex items-center gap-2">
                 <input type="hidden" name="tab" value="{{ $tab }}">
                 <input type="text" name="search" value="{{ $search }}" placeholder="{{ $tab === 'dokumen' ? 'Cari teks atau @username...' : 'Cari kata dalam vocabulary...' }}"
-                       class="px-3 py-1.5 bg-[#1a1a27] border border-[#3f3f5a] rounded-lg text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 w-64">
+                       class="px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-red-500 w-64">
                 <button type="submit" class="btn btn-primary text-xs px-3 py-1.5 rounded-lg">Cari</button>
                 @if($search)
-                    <a href="{{ route('unigram.thread', ['tab' => $tab]) }}" class="text-xs text-slate-400 hover:text-slate-200">Reset</a>
+                    <a href="{{ route('unigram.thread', ['tab' => $tab]) }}" class="text-xs text-gray-500 hover:text-gray-700">Reset</a>
                 @endif
             </form>
         </div>
@@ -115,7 +115,7 @@
         <div class="mt-6 overflow-x-auto">
             <table class="w-full text-left text-xs border-collapse">
                 <thead>
-                    <tr class="bg-[#1c1c2b] text-slate-400 uppercase text-[10px] border-b border-[#3f3f5a]">
+                    <tr class="bg-red-50 text-gray-500 uppercase text-[10px] border-b border-gray-200">
                         <th class="py-3 px-4 w-12 text-center">No</th>
                         <th class="py-3 px-4 w-36">Pengguna</th>
                         <th class="py-3 px-4 min-w-[280px]">Teks Asli & Hasil Stemming</th>
@@ -132,28 +132,28 @@
                             default   => 'bg-amber-500/10 text-amber-400 border-amber-500/20',
                         };
                     @endphp
-                    <tr class="hover:bg-[#1f1f30] transition-colors align-top">
-                        <td class="py-3.5 px-4 text-center text-slate-400 font-mono">
+                    <tr class="hover:bg-red-50 transition-colors align-top">
+                        <td class="py-3.5 px-4 text-center text-gray-500 font-mono">
                             {{ $dataDokumen->firstItem() + $index }}
                         </td>
 
                         <td class="py-3.5 px-4">
-                            <span class="font-semibold text-indigo-400 block">
+                            <span class="font-semibold text-red-600 block">
                                 {{ $item->username ? '@' . $item->username : '-' }}
                             </span>
-                            <span class="text-[10px] text-slate-500 mt-0.5 block">
+                            <span class="text-[10px] text-gray-500 mt-0.5 block">
                                 {{ $item->tanggal ? $item->tanggal->format('d/m/Y') : '-' }}
                             </span>
                         </td>
 
                         <td class="py-3.5 px-4 space-y-2">
                             <div>
-                                <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider block mb-0.5">Teks Asli:</span>
-                                <p class="text-slate-300 leading-relaxed text-xs">{{ $item->teks_asli }}</p>
+                                <span class="text-[10px] font-semibold text-gray-500 uppercase tracking-wider block mb-0.5">Teks Asli:</span>
+                                <p class="text-gray-600 leading-relaxed text-xs">{{ $item->teks_asli }}</p>
                             </div>
-                            <div class="p-2 rounded-lg bg-[#161622] border border-[#2d2d42]">
-                                <span class="text-[10px] font-semibold text-indigo-400 uppercase tracking-wider block mb-0.5">Hasil Stemming:</span>
-                                <p class="font-mono text-slate-200 text-xs">{{ $item->preprocessing->hasil_stemming ?? '-' }}</p>
+                            <div class="p-2 rounded-lg bg-gray-50 border border-gray-200">
+                                <span class="text-[10px] font-semibold text-red-600 uppercase tracking-wider block mb-0.5">Hasil Stemming:</span>
+                                <p class="font-mono text-gray-700 text-xs">{{ $item->preprocessing->hasil_stemming ?? '-' }}</p>
                             </div>
                         </td>
 
@@ -161,7 +161,7 @@
                             <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase border inline-block {{ $badge }}">
                                 {{ $item->sentimen ?? 'netral' }}
                             </span>
-                            <div class="text-[10px] text-slate-500 mt-1">
+                            <div class="text-[10px] text-gray-500 mt-1">
                                 {{ $item->unigram->count() }} token
                             </div>
                         </td>
@@ -172,10 +172,10 @@
                             @else
                                 <div class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto pr-1">
                                     @foreach($item->unigram as $u)
-                                    <div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#252538] border border-[#3f3f5a] text-xs hover:border-indigo-500/50 transition-colors"
+                                    <div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-gray-100 border border-gray-200 text-xs hover:border-red-300 transition-colors"
                                          title="TF: {{ round($u->tf, 4) }} | DF: {{ $u->df }} | IDF: {{ round($u->idf, 4) }}">
-                                        <span class="font-semibold text-slate-200">{{ $u->kata }}</span>
-                                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono font-bold">
+                                        <span class="font-semibold text-gray-700">{{ $u->kata }}</span>
+                                        <span class="text-[10px] px-1.5 py-0.5 rounded bg-red-100 text-red-500 font-mono font-bold">
                                             {{ round($u->tfidf, 4) }}
                                         </span>
                                     </div>
@@ -186,7 +186,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="text-center py-12 text-slate-400">
+                        <td colspan="5" class="text-center py-12 text-gray-500">
                             Belum ada data preprocessing yang siap dihitung.
                         </td>
                     </tr>
@@ -205,7 +205,7 @@
         <div class="mt-6 overflow-x-auto">
             <table class="w-full text-xs border-collapse">
                 <thead>
-                    <tr class="bg-[#1c1c2b] text-slate-400 uppercase text-[10px] border-b border-[#3f3f5a]">
+                    <tr class="bg-red-50 text-gray-500 uppercase text-[10px] border-b border-gray-200">
                         <th class="py-3 px-4 w-12 text-center" style="text-align: center !important;">No</th>
                         <th class="py-3 px-4 text-left" style="text-align: left !important;">Kata / Term (Unigram)</th>
                         <th class="py-3 px-4 text-center" style="text-align: center !important;">DF (Doc Freq)</th>
@@ -213,24 +213,24 @@
                         <th class="py-3 px-4 text-center" style="text-align: center !important;">TF-IDF (Positif)</th>
                         <th class="py-3 px-4 text-center" style="text-align: center !important;">TF-IDF (Negatif)</th>
                         <th class="py-3 px-4 text-center" style="text-align: center !important;">TF-IDF (Netral)</th>
-                        <th class="py-3 px-4 text-center font-bold text-indigo-400" style="text-align: center !important;">Total TF-IDF</th>
+                        <th class="py-3 px-4 text-center font-bold text-red-600" style="text-align: center !important;">Total TF-IDF</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-[#2d2d42]">
                     @forelse($vocabulary as $idx => $v)
-                    <tr class="hover:bg-[#1f1f30] transition-colors">
-                        <td class="py-2.5 px-4 text-center text-slate-400 font-mono" style="text-align: center !important;">{{ $idx + 1 }}</td>
-                        <td class="py-2.5 px-4 text-left font-semibold text-slate-200" style="text-align: left !important;">{{ $v->kata }}</td>
-                        <td class="py-2.5 px-4 text-center text-slate-300 font-mono" style="text-align: center !important;">{{ $v->df }}</td>
-                        <td class="py-2.5 px-4 text-center text-slate-300 font-mono" style="text-align: center !important;">{{ $v->idf }}</td>
+                    <tr class="hover:bg-red-50 transition-colors">
+                        <td class="py-2.5 px-4 text-center text-gray-500 font-mono" style="text-align: center !important;">{{ $idx + 1 }}</td>
+                        <td class="py-2.5 px-4 text-left font-semibold text-gray-700" style="text-align: left !important;">{{ $v->kata }}</td>
+                        <td class="py-2.5 px-4 text-center text-gray-600 font-mono" style="text-align: center !important;">{{ $v->df }}</td>
+                        <td class="py-2.5 px-4 text-center text-gray-600 font-mono" style="text-align: center !important;">{{ $v->idf }}</td>
                         <td class="py-2.5 px-4 text-center text-emerald-400 font-mono" style="text-align: center !important;">{{ round($v->tfidf_positif, 4) }}</td>
                         <td class="py-2.5 px-4 text-center text-rose-400 font-mono" style="text-align: center !important;">{{ round($v->tfidf_negatif, 4) }}</td>
                         <td class="py-2.5 px-4 text-center text-amber-400 font-mono" style="text-align: center !important;">{{ round($v->tfidf_netral, 4) }}</td>
-                        <td class="py-2.5 px-4 text-center font-bold text-indigo-400 font-mono" style="text-align: center !important;">{{ round($v->total_tfidf, 4) }}</td>
+                        <td class="py-2.5 px-4 text-center font-bold text-red-600 font-mono" style="text-align: center !important;">{{ round($v->total_tfidf, 4) }}</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="8" class="text-center py-12 text-slate-400" style="text-align: center !important;">
+                        <td colspan="8" class="text-center py-12 text-gray-500" style="text-align: center !important;">
                             Belum ada data vocabulary TF-IDF. Klik tombol "Hitung TF-IDF" terlebih dahulu.
                         </td>
                     </tr>
@@ -247,7 +247,7 @@
 function konfirmasiHitung() {
     Swal.fire({
         title: 'Hitung Pembobotan TF-IDF Data Thread?',
-        html: '<p class="text-sm text-slate-300 mb-3">Sistem akan menghitung Term Frequency (TF), Inverse Document Frequency (IDF), dan bobot TF-IDF untuk seluruh token kata hasil praproses Data Thread.</p>',
+        html: '<p class="text-sm text-gray-600 mb-3">Sistem akan menghitung Term Frequency (TF), Inverse Document Frequency (IDF), dan bobot TF-IDF untuk seluruh token kata hasil praproses Data Thread.</p>',
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Ya, Jalankan',
@@ -256,9 +256,9 @@ function konfirmasiHitung() {
         background: '#1e1e2e',
         color: '#f8fafc',
         customClass: {
-            popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+            popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
             title: 'text-lg font-bold text-white mb-2',
-            htmlContainer: 'text-sm text-slate-300',
+            htmlContainer: 'text-sm text-gray-600',
             actions: 'flex items-center justify-center gap-3 mt-4',
             confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
             cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95'
@@ -267,7 +267,7 @@ function konfirmasiHitung() {
         if (result.isConfirmed) {
             Swal.fire({
                 title: 'Sedang Menghitung TF-IDF...',
-                html: '<p class="text-sm text-slate-400 mt-2">Mohon tunggu, bobot TF, DF, IDF, dan TF-IDF sedang dikalkulasi.</p>',
+                html: '<p class="text-sm text-gray-500 mt-2">Mohon tunggu, bobot TF, DF, IDF, dan TF-IDF sedang dikalkulasi.</p>',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 showConfirmButton: false,
@@ -277,7 +277,7 @@ function konfirmasiHitung() {
                 background: '#1e1e2e',
                 color: '#f8fafc',
                 customClass: {
-                    popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                    popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
                     title: 'text-lg font-bold text-white mb-2',
                 }
             });
@@ -298,9 +298,9 @@ function konfirmasiReset() {
         background: '#1e1e2e',
         color: '#f8fafc',
         customClass: {
-            popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+            popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
             title: 'text-lg font-bold text-white mb-2',
-            htmlContainer: 'text-sm text-slate-300',
+            htmlContainer: 'text-sm text-gray-600',
             actions: 'flex items-center justify-center gap-3 mt-4',
             confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
             cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95'

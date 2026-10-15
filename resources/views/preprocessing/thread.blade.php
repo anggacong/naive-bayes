@@ -11,14 +11,14 @@
 {{-- ─── Status Bar ─── --}}
 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
     <div class="card-stat violet">
-        <div class="stat-icon bg-violet-500/15 text-violet-400">
+        <div class="stat-icon bg-violet-500/15 text-red-600">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
             </svg>
         </div>
         <div>
             <div class="text-xl font-extrabold text-white">{{ $totalData }}</div>
-            <div class="text-xs text-slate-500 mt-0.5">Total Data Thread</div>
+            <div class="text-xs text-gray-500 mt-0.5">Total Data Thread</div>
         </div>
     </div>
     <div class="card-stat green">
@@ -29,7 +29,7 @@
         </div>
         <div>
             <div class="text-xl font-extrabold text-white">{{ $sudahDiproses }}</div>
-            <div class="text-xs text-slate-500 mt-0.5">Sudah Diproses</div>
+            <div class="text-xs text-gray-500 mt-0.5">Sudah Diproses</div>
         </div>
     </div>
     <div class="card-stat amber">
@@ -40,18 +40,18 @@
         </div>
         <div>
             <div class="text-xl font-extrabold text-white">{{ $totalData - $sudahDiproses }}</div>
-            <div class="text-xs text-slate-500 mt-0.5">Belum Diproses</div>
+            <div class="text-xs text-gray-500 mt-0.5">Belum Diproses</div>
         </div>
     </div>
     <div class="card-stat cyan">
-        <div class="stat-icon bg-cyan-500/15 text-cyan-400">
+        <div class="stat-icon bg-cyan-500/15 text-orange-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
             </svg>
         </div>
         <div>
             <div class="text-xl font-extrabold text-white">7</div>
-            <div class="text-xs text-slate-500 mt-0.5">Tahap Proses</div>
+            <div class="text-xs text-gray-500 mt-0.5">Tahap Proses</div>
         </div>
     </div>
 </div>
@@ -102,24 +102,24 @@
 <div class="card mb-6 p-4">
     <form method="GET" action="{{ route('preprocessing.thread') }}" class="flex flex-col md:flex-row items-center gap-3">
         <div class="relative flex-1 w-full">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
             </div>
             <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari teks asli, username, atau hasil kata praproses..."
-                   class="w-full pl-10 pr-4 py-2 bg-[#161626] border border-[#3f3f5a] rounded-xl text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors">
+                   class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:bg-white transition-colors">
         </div>
 
         <div class="flex items-center gap-2 w-full md:w-auto">
-            <select name="sentimen" class="px-3 py-2 bg-[#161626] border border-[#3f3f5a] rounded-xl text-xs text-slate-300 focus:outline-none focus:border-indigo-500 transition-colors">
+            <select name="sentimen" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 focus:outline-none focus:border-red-500 focus:bg-white transition-colors">
                 <option value="">Semua Sentimen</option>
                 <option value="positif" {{ request('sentimen') === 'positif' ? 'selected' : '' }}>Positif</option>
                 <option value="negatif" {{ request('sentimen') === 'negatif' ? 'selected' : '' }}>Negatif</option>
                 <option value="netral" {{ request('sentimen') === 'netral' ? 'selected' : '' }}>Netral</option>
             </select>
 
-            <select name="status" class="px-3 py-2 bg-[#161626] border border-[#3f3f5a] rounded-xl text-xs text-slate-300 focus:outline-none focus:border-indigo-500 transition-colors">
+            <select name="status" class="px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 focus:outline-none focus:border-red-500 focus:bg-white transition-colors">
                 <option value="">Semua Status</option>
                 <option value="sudah" {{ request('status') === 'sudah' ? 'selected' : '' }}>Sudah Diproses</option>
                 <option value="belum" {{ request('status') === 'belum' ? 'selected' : '' }}>Belum Diproses</option>
@@ -133,7 +133,7 @@
             </button>
 
             @if(request()->hasAny(['q', 'sentimen', 'status']))
-            <a href="{{ route('preprocessing.thread') }}" class="btn btn-outline text-xs px-3 py-2 rounded-xl text-slate-400 hover:text-slate-200 shrink-0" title="Reset Pencarian">
+            <a href="{{ route('preprocessing.thread') }}" class="btn btn-outline text-xs px-3 py-2 rounded-xl text-gray-500 hover:text-gray-700 shrink-0" title="Reset Pencarian">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -148,11 +148,11 @@
 @if($totalData === 0)
     <div class="card text-center py-16">
         <div class="flex justify-center mb-3">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
             </svg>
         </div>
-        <p class="text-slate-500 text-sm">Belum ada data Thread. <a href="{{ route('data-thread.create') }}" class="text-violet-400 underline">Tambahkan data Thread terlebih dahulu.</a></p>
+        <p class="text-gray-500 text-sm">Belum ada data Thread. <a href="{{ route('data-thread.create') }}" class="text-red-600 underline">Tambahkan data Thread terlebih dahulu.</a></p>
     </div>
 @elseif($data->count() === 0)
     <div class="card text-center py-16">
@@ -161,27 +161,27 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
             </svg>
         </div>
-        <h3 class="text-sm font-semibold text-slate-200">Data Tidak Ditemukan</h3>
-        <p class="text-xs text-slate-400 mt-1 max-w-sm mx-auto">Tidak ada data preprocessing Thread yang cocok dengan kata kunci atau filter pencarian Anda.</p>
+        <h3 class="text-sm font-semibold text-gray-700">Data Tidak Ditemukan</h3>
+        <p class="text-xs text-gray-500 mt-1 max-w-sm mx-auto">Tidak ada data preprocessing Thread yang cocok dengan kata kunci atau filter pencarian Anda.</p>
         <a href="{{ route('preprocessing.thread') }}" class="btn btn-primary text-xs px-4 py-2 rounded-lg mt-4 inline-flex items-center gap-1.5">
             Reset Pencarian
         </a>
     </div>
 @else
     <div class="card p-0 overflow-hidden">
-        <div class="p-4 border-b border-[#3f3f5a] flex items-center justify-between gap-3 flex-wrap">
+        <div class="p-4 border-b border-gray-200 flex items-center justify-between gap-3 flex-wrap">
             <div class="flex items-center gap-3">
-                <span class="text-xs text-slate-400 font-medium inline-flex items-center gap-1">
+                <span class="text-xs text-gray-500 font-medium inline-flex items-center gap-1">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 01-2 2h-4a2 2 0 01-2-2v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                     </svg>
                     Klik teks untuk melihat detail lengkap
                 </span>
-                <span class="text-xs text-slate-600">|</span>
-                <span class="text-xs text-slate-500">Scroll horizontal untuk melihat semua tahap</span>
+                <span class="text-xs text-gray-500">|</span>
+                <span class="text-xs text-gray-500">Scroll horizontal untuk melihat semua tahap</span>
             </div>
             @if(request()->hasAny(['q', 'sentimen', 'status']))
-                <span class="text-xs text-indigo-400 font-medium bg-indigo-500/10 px-2.5 py-1 rounded-lg border border-indigo-500/20">
+                <span class="text-xs text-red-600 font-medium bg-red-100 px-2.5 py-1 rounded-lg border border-red-200">
                     Menampilkan {{ $data->total() }} hasil pencarian
                 </span>
             @endif
@@ -190,7 +190,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="w-10 sticky left-0 bg-[#2a2a3e] z-10">No</th>
+                        <th class="w-10 sticky left-0 bg-gray-50 z-10">No</th>
                         <th class="min-w-[140px]">Teks Asli</th>
                         <th>
                             <div class="step-header">
@@ -234,14 +234,14 @@
                     @foreach($data as $index => $item)
                         @php $prep = $item->preprocessing; @endphp
                         <tr>
-                            <td class="text-slate-500 text-sm text-center sticky left-0 bg-[#1e1e2e]">
+                            <td class="text-gray-500 text-sm text-center sticky left-0 bg-white">
                                 {{ $data->firstItem() + $index }}
                             </td>
                             <td class="prep-cell">
                                 <div class="prep-text"
                                      onclick="openModal('Teks Asli #{{ $item->id }}', {{ json_encode($item->teks_asli) }})">
                                     @if($item->username)
-                                        <span class="text-[11px] text-violet-400 font-semibold block mb-0.5">{{ '@' . $item->username }}</span>
+                                        <span class="text-[11px] text-red-600 font-semibold block mb-0.5">{{ '@' . $item->username }}</span>
                                     @endif
                                     {{ Str::limit($item->teks_asli, 80) }}
                                 </div>
@@ -274,7 +274,7 @@
                                             </span>
                                         @endif
                                     </div>
-                                    <div class="text-[10px] text-slate-600 mt-1">{{ count($tokens) }} token</div>
+                                    <div class="text-[10px] text-gray-500 mt-1">{{ count($tokens) }} token</div>
                                 </td>
                                 <td class="prep-cell">
                                     <div class="prep-text"
@@ -303,7 +303,7 @@
                             @else
                                 @for($s = 0; $s < 7; $s++)
                                     <td class="text-center">
-                                        <span class="text-slate-700 text-xs italic">belum diproses</span>
+                                        <span class="text-gray-700 text-xs italic">belum diproses</span>
                                     </td>
                                 @endfor
                             @endif
@@ -333,8 +333,8 @@
         </div>
 
         @if ($data->hasPages())
-            <div class="p-4 border-t border-[#3f3f5a] flex items-center justify-between">
-                <span class="text-xs text-slate-500">
+            <div class="p-4 border-t border-gray-200 flex items-center justify-between">
+                <span class="text-xs text-gray-500">
                     Menampilkan {{ $data->firstItem() }}–{{ $data->lastItem() }} dari {{ $data->total() }} data
                 </span>
                 <div class="pagination">
@@ -369,8 +369,8 @@
     function konfirmasiProsesThread() {
         Swal.fire({
             title: 'Jalankan Preprocessing Data Thread?',
-            html: '<p class="text-sm text-slate-300 mb-3">Sistem akan memproses <b>{{ $totalData }} data Thread</b> melalui 7 tahapan preprocessing:</p>' +
-                  '<div class="text-xs text-violet-300 bg-[#252538] p-3.5 rounded-xl border border-[#3f3f5a] text-left leading-relaxed mb-2">' +
+            html: '<p class="text-sm text-gray-600 mb-3">Sistem akan memproses <b>{{ $totalData }} data Thread</b> melalui 7 tahapan preprocessing:</p>' +
+                  '<div class="text-xs text-violet-300 bg-gray-100 p-3.5 rounded-xl border border-gray-200 text-left leading-relaxed mb-2">' +
                   '1. Cleaning &bull; 2. Case Folding &bull; 3. Tokenizing<br>' +
                   '4. Repeated Char Removal &bull; 5. Normalisasi<br>' +
                   '6. Stopword Removal &bull; 7. Stemming</div>',
@@ -382,9 +382,9 @@
             background: '#1e1e2e',
             color: '#f8fafc',
             customClass: {
-                popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
                 title: 'text-lg font-bold text-white mb-2',
-                htmlContainer: 'text-sm text-slate-300',
+                htmlContainer: 'text-sm text-gray-600',
                 actions: 'flex items-center justify-center gap-3 mt-4',
                 confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
                 cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95'
@@ -393,7 +393,7 @@
             if (result.isConfirmed) {
                 Swal.fire({
                     title: 'Sedang Memproses Preprocessing...',
-                    html: '<p class="text-sm text-slate-400 mt-2">Mohon tunggu, 7 tahapan praproses sedang dijalankan untuk seluruh data Thread.</p>',
+                    html: '<p class="text-sm text-gray-500 mt-2">Mohon tunggu, 7 tahapan praproses sedang dijalankan untuk seluruh data Thread.</p>',
                     allowOutsideClick: false,
                     allowEscapeKey: false,
                     showConfirmButton: false,
@@ -403,7 +403,7 @@
                     background: '#1e1e2e',
                     color: '#f8fafc',
                     customClass: {
-                        popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                        popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
                         title: 'text-lg font-bold text-white mb-2',
                     }
                 });
@@ -424,9 +424,9 @@
             background: '#1e1e2e',
             color: '#f8fafc',
             customClass: {
-                popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
                 title: 'text-lg font-bold text-white mb-2',
-                htmlContainer: 'text-sm text-slate-300',
+                htmlContainer: 'text-sm text-gray-600',
                 actions: 'flex items-center justify-center gap-3 mt-4',
                 confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
                 cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-red-600 hover:bg-red-500 text-white shadow-lg shadow-red-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95'

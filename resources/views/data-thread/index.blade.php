@@ -7,7 +7,7 @@
 @section('content')
 <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
     <div>
-        <p class="text-sm text-slate-500">Total: <span class="text-violet-400 font-semibold">{{ $data->total() }} data</span></p>
+        <p class="text-sm text-gray-500">Total: <span class="text-red-600 font-semibold">{{ $data->total() }} data</span></p>
     </div>
     <div class="flex flex-wrap items-center gap-3">
         <form action="{{ route('data-thread.import') }}" method="POST" enctype="multipart/form-data" class="flex items-center gap-2">
@@ -45,7 +45,7 @@
 <div class="card mb-6 p-4">
     <form method="GET" action="{{ route('data-thread.index') }}" class="flex flex-col md:flex-row items-center gap-3">
         <div class="relative flex-1 w-full">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-500">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
@@ -90,22 +90,22 @@
             <tbody>
                 @forelse ($data as $index => $item)
                     <tr class="fade-in-up">
-                        <td class="text-slate-500 text-sm">{{ $data->firstItem() + $index }}</td>
+                        <td class="text-gray-500 text-sm">{{ $data->firstItem() + $index }}</td>
                         <td>
-                            <span class="font-semibold text-violet-400 text-sm">{{ $item->username ? '@' . $item->username : '-' }}</span>
+                            <span class="font-semibold text-red-600 text-sm">{{ $item->username ? '@' . $item->username : '-' }}</span>
                         </td>
                         <td>
-                            <div class="max-w-md text-sm text-slate-300 leading-relaxed">
+                            <div class="max-w-md text-sm text-gray-600 leading-relaxed">
                                 {{ Str::limit($item->teks_asli, 120) }}
                                 @if(strlen($item->teks_asli) > 120)
                                     <button onclick="openModal('Teks Asli #{{ $item->id }}', {{ json_encode($item->teks_asli) }})"
-                                            class="text-violet-400 hover:text-violet-300 text-xs font-medium ml-1 underline">
+                                            class="text-red-600 hover:text-violet-300 text-xs font-medium ml-1 underline">
                                         selengkapnya
                                     </button>
                                 @endif
                             </div>
                         </td>
-                        <td class="text-sm text-slate-400 whitespace-nowrap">
+                        <td class="text-sm text-gray-500 whitespace-nowrap">
                             {{ $item->tanggal ? $item->tanggal->format('d M Y') : '-' }}
                         </td>
                         <td>
@@ -130,7 +130,7 @@
                             <div class="flex items-center justify-center gap-2">
                                 <a href="{{ route('data-thread.edit', $item) }}"
                                    class="btn btn-outline btn-icon btn-sm" title="Edit">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-violet-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                     </svg>
                                 </a>
@@ -147,13 +147,13 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="text-center py-16 text-slate-600">
+                        <td colspan="6" class="text-center py-16 text-gray-500">
                             <div class="flex justify-center mb-3">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-slate-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
                                 </svg>
                             </div>
-                            <div class="text-sm">Belum ada data Thread. <a href="{{ route('data-thread.create') }}" class="text-violet-400 underline">Tambahkan sekarang</a></div>
+                            <div class="text-sm">Belum ada data Thread. <a href="{{ route('data-thread.create') }}" class="text-red-600 underline">Tambahkan sekarang</a></div>
                         </td>
                     </tr>
                 @endforelse
@@ -162,8 +162,8 @@
     </div>
 
     @if ($data->hasPages())
-        <div class="p-4 border-t border-[#3f3f5a] flex items-center justify-between">
-            <span class="text-xs text-slate-500">
+        <div class="p-4 border-t border-gray-200 flex items-center justify-between">
+            <span class="text-xs text-gray-500">
                 Menampilkan {{ $data->firstItem() }}–{{ $data->lastItem() }} dari {{ $data->total() }} data
             </span>
             <div class="pagination">
@@ -206,12 +206,12 @@ function confirmDeleteThread(id) {
             background: '#1e1e2e',
             color: '#f8fafc',
             customClass: {
-                popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
                 title: 'text-lg font-bold text-white mb-2',
-                htmlContainer: 'text-sm text-slate-300',
+                htmlContainer: 'text-sm text-gray-600',
                 actions: 'flex items-center justify-center gap-3 mt-4',
                 confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
-                cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 transition-all duration-200 cursor-pointer'
+                cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-gray-700 transition-all duration-200 cursor-pointer'
             }
         }).then((result) => {
             if (result.isConfirmed) {
@@ -229,7 +229,7 @@ function confirmDestroyAllThread() {
     if (typeof Swal !== 'undefined') {
         Swal.fire({
             title: 'Hapus Semua Data Thread?',
-            html: 'Apakah Anda yakin ingin menghapus <strong>seluruh Data Thread</strong>?<br><small class="text-slate-400">Catatan: Seluruh proses (Preprocessing, Unigram, Naive Bayes) harus di-reset terlebih dahulu.</small>',
+            html: 'Apakah Anda yakin ingin menghapus <strong>seluruh Data Thread</strong>?<br><small class="text-gray-500">Catatan: Seluruh proses (Preprocessing, Unigram, Naive Bayes) harus di-reset terlebih dahulu.</small>',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonText: 'Ya, Hapus Semua',
@@ -238,12 +238,12 @@ function confirmDestroyAllThread() {
             background: '#1e1e2e',
             color: '#f8fafc',
             customClass: {
-                popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+                popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
                 title: 'text-lg font-bold text-white mb-2',
-                htmlContainer: 'text-sm text-slate-300',
+                htmlContainer: 'text-sm text-gray-600',
                 actions: 'flex items-center justify-center gap-3 mt-4',
                 confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
-                cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 transition-all duration-200 cursor-pointer'
+                cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-gray-700 transition-all duration-200 cursor-pointer'
             }
         }).then((result) => {
             if (result.isConfirmed) {

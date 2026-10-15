@@ -11,7 +11,7 @@
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Kamus Normalisasi</h1>
             <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 Kelola pemetaan kata slang/informal ke kata baku yang digunakan saat preprocessing.
-                Total: <span class="font-semibold text-indigo-600 dark:text-indigo-400">{{ $kamus->total() }} kata</span>
+                Total: <span class="font-semibold text-indigo-600 dark:text-red-600">{{ $kamus->total() }} kata</span>
             </p>
         </div>
         <button onclick="document.getElementById('modal-tambah').classList.remove('hidden')"
@@ -42,25 +42,25 @@
     @endif
 
     {{-- Search --}}
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 p-4">
+    <div class="card p-4 mb-6">
         <form method="GET" action="{{ route('kamus-normalisasi.index') }}" class="flex gap-3">
             <div class="relative flex-1">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-4 w-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                    <svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </div>
                 <input type="text" name="q" value="{{ request('q') }}"
                     placeholder="Cari kata slang atau kata formal..."
-                    class="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition">
+                    class="w-full pl-10 pr-4 py-2 text-xs border border-gray-200 rounded-xl bg-gray-50 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-red-500 focus:bg-white transition-colors">
             </div>
             <button type="submit"
-                class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition">
+                class="btn btn-primary text-xs px-4 py-2 rounded-xl">
                 Cari
             </button>
             @if(request('q'))
             <a href="{{ route('kamus-normalisasi.index') }}"
-                class="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition">
+                class="btn btn-outline text-xs px-4 py-2 rounded-xl">
                 Reset
             </a>
             @endif
@@ -115,7 +115,7 @@
                         <td class="px-6 py-3 text-center">
                             <div class="flex items-center justify-center gap-2">
                                 <button onclick="openEditModal({{ $item->id }}, '{{ e($item->slang) }}', '{{ e($item->formal) }}')"
-                                    class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-indigo-400 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 rounded-lg transition">
+                                    class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-indigo-700 bg-indigo-50 hover:bg-indigo-100 dark:text-red-600 dark:bg-indigo-900/20 dark:hover:bg-indigo-900/40 rounded-lg transition">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                     </svg>
@@ -234,12 +234,12 @@ function confirmDelete(event, slang) {
         background: '#1e1e2e',
         color: '#f8fafc',
         customClass: {
-            popup: 'border border-[#3f3f5a] rounded-2xl shadow-2xl bg-[#1e1e2e] text-slate-100 p-6',
+            popup: 'border border-gray-200 rounded-2xl shadow-2xl bg-white text-gray-800 p-6',
             title: 'text-lg font-bold text-white mb-2',
-            htmlContainer: 'text-sm text-slate-300',
+            htmlContainer: 'text-sm text-gray-600',
             actions: 'flex items-center justify-center gap-3 mt-4',
             confirmButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-rose-600 hover:bg-rose-500 text-white shadow-lg shadow-rose-600/30 transition-all duration-200 cursor-pointer hover:scale-[1.02] active:scale-95',
-            cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-slate-200 transition-all duration-200 cursor-pointer'
+            cancelButton: 'inline-flex items-center justify-center px-6 py-2.5 rounded-xl font-bold text-sm bg-slate-700 hover:bg-slate-600 text-gray-700 transition-all duration-200 cursor-pointer'
         }
     }).then((result) => {
         if (result.isConfirmed) form.submit();
