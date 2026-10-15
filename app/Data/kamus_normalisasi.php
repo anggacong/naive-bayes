@@ -4415,4 +4415,6 @@ return array(
   'z' => 'saja',
   'za' => 'saja',
   'zama' => 'zaman',
+  'bermanfaat' => 'manfaat',
+  'bermanfat' => 'manfaat'
 );
